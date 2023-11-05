@@ -6,7 +6,7 @@ import utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utils.Constants.UI.Buttons.*;
+import static utils.Constants.UI.MenuButtons.*;
 
 public class MenuButton {
 

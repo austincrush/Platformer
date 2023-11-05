@@ -23,7 +23,7 @@ public class Player extends Entity {
     private boolean right;
     private boolean down;
     private boolean jump;
-    private float playerSpeed = 1.15f * Game.SCALE;
+    private float playerSpeed = 1.0f * Game.SCALE;
     private int[][] lvlData;
     private float xDrawOffset = 7 * Game.SCALE;
     private float yDrawOffset = 4 * Game.SCALE;
@@ -45,8 +45,8 @@ public class Player extends Entity {
         setAnimation();
     }
 
-    public void render(Graphics g) {
-        g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
+    public void render(Graphics g, int levelOffset) {
+        g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset) - levelOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
         //drawHitbox(g);
     }
 
@@ -89,8 +89,10 @@ public class Player extends Entity {
             jump();
         }
 
-        if (!left && !right && !inAir) {
-            return;
+        if (!inAir) {
+            if ((!left && !right) || (right && left)) {
+                return;
+            }
         }
 
         float xSpeed = 0;
@@ -162,7 +164,7 @@ public class Player extends Entity {
     }
 
     private void loadAnimations() {
-        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS_NEW);
+        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
         animations = new BufferedImage[9][8];
 
